@@ -1,4 +1,5 @@
 %filename HH.m
+%testtesttest
 %numerical solution of the space-clamped Hodgkin-Huxley equations
 clear all
 clf
