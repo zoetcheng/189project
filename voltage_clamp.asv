@@ -1,4 +1,6 @@
-%filename HH.m
+% voltage clamp 
+% copying HH.m and adding to it
+
 %numerical solution of the space-clamped Hodgkin-Huxley equations
 clear all
 clc
@@ -9,6 +11,14 @@ in_HH
 in_mhnv
 for klok=1:klokmax
   t=klok*dt;                      %note time
+  
+  %if statement?
+  if (t>=0) && (t<=10) %how long the transient stimulation is
+      v = 10; % set voltage mV
+  else
+      %update v:
+    v=(v+(dt/C)*(gE+izero(t)))/(1+(dt/C)*g);
+  
   m=snew(m,alpham(v),betam(v),dt); %update m
   h=snew(h,alphah(v),betah(v),dt); %update h
   n=snew(n,alphan(v),betan(v),dt); %update n
@@ -18,8 +28,7 @@ for klok=1:klokmax
   gE=gNa*ENa+gK*EK+gLbar*EL;         %gE=g*E
   %save old value of v for checking purposes:
   v_old=v;
-  %update v:
-  v=(v+(dt/C)*(gE+izero(t)))/(1+(dt/C)*g);
+  
   if(check)
     E=gE/g;
     chv=C*(v-v_old)/dt+g*(v-E)-izero(t)

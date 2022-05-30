@@ -28,7 +28,7 @@ EL = -59;   %(mV)
 dt=0.1;     %time step duration (ms)
 tmax=250;    %duration of experiment (ms)
 %total number of time steps in the experiment:
-klokmax=ceil(tmax/dt);
+klokmax=ceil(tmax/dt)
 %
 %initialize arrays that hold data for plotting:
 mhn_plot=zeros(3,klokmax);
@@ -41,9 +41,9 @@ t_plot=zeros(1,klokmax);
 %then a subsequent 15 muA current pulse of 1 ms duration
 %is applied beginning at t=10 ms.
 %voltage prior to t=0:
-vhold=  -70;  %(mV)
+vhold=  -70  %(mV)
 %voltage just after t=0:
-vstart= vhold;  %(mV), so that no extra current is put in at the beginning
+vstart= vhold  %(mV), so that no extra current is put in at the beginning
 %(change in v is result of current shock applied at t=0)
 %
 %initialize parameters of subsequent current pulse:
@@ -56,5 +56,5 @@ ip=10;        %current applied (muA) - constantly
     % amount of current is being outputted (t1p and t2p do not matter)
 %
 %initialize checking parameter
-check=1;      %set check=1 to enable self-checking
+check=1      %set check=1 to enable self-checking
              %set check=0 to disable self-checking

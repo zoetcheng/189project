@@ -10,14 +10,14 @@
 %remain constant during the current shock.
 %
 %simulate time prior to t=0:
-v=vhold
+v=vhold;
 %set m,h,n equal to their steady values
 %under constant-v conditions:
-m=alpham(v)/(alpham(v)+betam(v))
-h=alphah(v)/(alphah(v)+betah(v))
-n=alphan(v)/(alphan(v)+betan(v))
+m=alpham(v)/(alpham(v)+betam(v));
+h=alphah(v)/(alphah(v)+betah(v));
+n=alphan(v)/(alphan(v)+betan(v));
 %
 %now let voltage jump to its value
 %just after t=0, without making
 %any further change in m,h,n:
-v=vstart
+v=vstart;
