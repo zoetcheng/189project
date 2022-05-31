@@ -19,22 +19,27 @@ for klok=1:klokmax
   %save old value of v for checking purposes:
   v_old=v;
   %update v:
-  v=(v+(dt/C)*(gE+izero(t)))/(1+(dt/C)*g);
+  v=(v+(dt/C)*(gE+current_pulse(t)))/(1+(dt/C)*g); %izero(t) or current_pulse(t)
   if(check)
     E=gE/g;
-    chv=C*(v-v_old)/dt+g*(v-E)-izero(t)
+    chv=C*(v-v_old)/dt+g*(v-E)-current_pulse(t) %izero(t) or current_pulse(t)
   end
   %store results for future plotting:
   mhn_plot(:,klok)=[m h n]';
   v_plot(klok)=v;
   t_plot(klok)=t;
+  i_plot(klok)=current_pulse(t);
 end
-subplot(2,1,1),plot(t_plot,v_plot)
+subplot(3,1,1),plot(t_plot,v_plot)
 title('Neuron Voltage')
 xlabel('time (ms)')
 ylabel('voltage (mV)')
-subplot(2,1,2),plot(t_plot,mhn_plot)
+subplot(3,1,2),plot(t_plot,mhn_plot)
 legend('m','h','n')
 title('Gating Variables')
 xlabel('time (ms)')
 ylabel('proportion')
+subplot(3,1,3),plot(t_plot,i_plot)
+title('Applied Current')
+xlabel('time (ms)')
+ylabel('current (muA)')

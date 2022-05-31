@@ -48,8 +48,8 @@ vstart= vhold;  %(mV), so that no extra current is put in at the beginning
 %
 %initialize parameters of subsequent current pulse:
 t1p=10;       %starting time (ms)
-t2p=11;       %stopping time (ms)
-ip=10;        %current applied (muA) - constantly
+t2p=60;       %stopping time (ms)
+ip=10;        %current applied (muA) - constantly or max of current pulse
     % setting ip to 10 results in regular action potentials for the given 
     % time period, all peak at about 20mV (they do cross threshold and a
     % spike is triggered) - this is bc izero.m is constant - a constant
