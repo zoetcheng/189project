@@ -26,6 +26,40 @@ global klokSeiz; %set Klok seiz to a specific value if you want to test this
 in_HH
 in_mhnv
 
+
+%%%%%%%%%%%%%%%  Uncomment if trying to run only this program
+
+
+% ProbSeiz2=randi([1,klokmax],1,klokmax); 
+% %we will say that if this is 1 there is a seizure that day but it can't
+% %happen on consecutive days
+% 
+% is2=ones(1,klokmax);
+% Seiz2= ProbSeiz2 == is2;
+% isSeiz2=zeros(1,klokmax);
+% 
+% % since we are saying the seizure can't happen on consecutive days it also
+% % can't occure twice in the same day. So this needs to be altered. 
+% 
+% for i=1:length(isSeiz2)
+%     if Seiz2(i)==1 
+%         Seiz2(i+1:end)=0; %this should ensure that no matter what we only get 1 per day
+%         isSeiz2(i:end)=Seiz2(i:end);
+%         break
+%     else
+%         isSeiz2(i)=Seiz2(i);
+%     end
+% end
+% klokSeiz=find(isSeiz2);
+
+%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
 counter=0;
 for klok=1:klokmax
   t=klok*dt;                      %note time
