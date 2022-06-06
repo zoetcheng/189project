@@ -19,14 +19,49 @@
 % voltage clamp 
 % copying HH.m and adding to it
 
+%%%%  Comment out Clear All if using Seizure 30day model
+
+clear all
+
 %numerical solution of the space-clamped Hodgkin-Huxley equations
 global check;
 global t1p t2p ip; %parameters for the function izero(t)
-global klokSeiz;
 in_HH
 in_mhnv
 
-counter=0;
+
+
+
+if exist('klokSeiz','var') 
+    klokSeiz=klokSeiz(1);
+    counter=0;
+else
+    ProbSeiz2=randi([1,klokmax],1,klokmax); 
+    is2=ones(1,klokmax);
+    Seiz2= ProbSeiz2 == is2;
+    isSeiz2=zeros(1,klokmax);
+    for i=1:length(isSeiz2)
+        if Seiz2(i)==1 
+            Seiz2(i+1:end)=0; %this should ensure that no matter what we only get 1 per day
+            isSeiz2(i:end)=Seiz2(i:end);
+            break
+        else
+            isSeiz2(i)=Seiz2(i);
+        end
+    end
+    klokSeiz=find(isSeiz2);
+    counter=0;
+end
+
+
+
+
+
+
+
+
+
+
 for klok=1:klokmax
   t=klok*dt;                      %note time
   tSeiz=klokSeiz*dt;
@@ -76,28 +111,32 @@ for klok=1:klokmax
 end
 
 
+
 figure(1)
 plot(t_plot,chv_plot)
 title('Change in Voltage')
 xlabel('time (ms)')
 ylabel('Change in voltage (mV)')
+% 
+% 
+% 
+% figure(2)
+% subplot(2,1,1),plot(t_plot,v_plot)
+% title('Neuron Voltage')
+% xlabel('time (ms)')
+% ylabel('voltage (mV)')
+% subplot(2,1,2),plot(t_plot,mhn_plot)
+% legend('m','h','n')
+% title('Gating Variables')
+% xlabel('time (ms)')
+% ylabel('proportion')
 
 
 
-figure(2)
-subplot(2,1,1),plot(t_plot,v_plot)
-title('Neuron Voltage')
-xlabel('time (ms)')
-ylabel('voltage (mV)')
-subplot(2,1,2),plot(t_plot,mhn_plot)
-legend('m','h','n')
-title('Gating Variables')
-xlabel('time (ms)')
-ylabel('proportion')
+% so essentially this runs through and detects a seizure if one occurs on
+% that day and 
 
-
-
-% so essentially this runs through t
+% Idk what I was going to say here obviously ADHD brain lol
 
 
 

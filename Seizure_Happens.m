@@ -19,51 +19,46 @@
 % voltage clamp 
 % copying HH.m and adding to it
 
+%%%%  Comment out Clear All if using Seizure 30day model
+
+clear all
+
 %numerical solution of the space-clamped Hodgkin-Huxley equations
 global check;
 global t1p t2p ip; %parameters for the function izero(t)
-global klokSeiz; %set Klok seiz to a specific value if you want to test this
 in_HH
 in_mhnv
 
 
-%%%%%%%%%%%%%%%  Uncomment if trying to run only this program
 
 
-% ProbSeiz2=randi([1,klokmax],1,klokmax); 
-% %we will say that if this is 1 there is a seizure that day but it can't
-% %happen on consecutive days
-% 
-% is2=ones(1,klokmax);
-% Seiz2= ProbSeiz2 == is2;
-% isSeiz2=zeros(1,klokmax);
-% 
-% % since we are saying the seizure can't happen on consecutive days it also
-% % can't occure twice in the same day. So this needs to be altered. 
-% 
-% for i=1:length(isSeiz2)
-%     if Seiz2(i)==1 
-%         Seiz2(i+1:end)=0; %this should ensure that no matter what we only get 1 per day
-%         isSeiz2(i:end)=Seiz2(i:end);
-%         break
-%     else
-%         isSeiz2(i)=Seiz2(i);
-%     end
-% end
-% klokSeiz=find(isSeiz2);
-
-%%%%%%%%%%%%%%%%%%
+if exist('klokSeiz','var') 
+    klokSeiz=klokSeiz(1);
+    counter=0;
+else
+    ProbSeiz2=randi([1,klokmax],1,klokmax); 
+    is2=ones(1,klokmax);
+    Seiz2= ProbSeiz2 == is2;
+    isSeiz2=zeros(1,klokmax);
+    for i=1:length(isSeiz2)
+        if Seiz2(i)==1 
+            Seiz2(i+1:end)=0; %this should ensure that no matter what we only get 1 per day
+            isSeiz2(i:end)=Seiz2(i:end);
+            break
+        else
+            isSeiz2(i)=Seiz2(i);
+        end
+    end
+    klokSeiz=find(isSeiz2);
+    counter=0;
+end
 
 
 
 
-
-
-
-counter=0;
 for klok=1:klokmax
   t=klok*dt;                      %note time
-  tSeiz=klokSeiz(1)*dt;
+  tSeiz=klokSeiz*dt;
   m=snew(m,alpham(v),betam(v),dt); %update m
   h=snew(h,alphah(v),betah(v),dt); %update h
   n=snew(n,alphan(v),betan(v),dt); %update n
@@ -74,11 +69,12 @@ for klok=1:klokmax
   %save old value of v for checking purposes:
   v_old=v;
   
-  
-  if t>=tSeiz && t<=(tSeiz+50) 
+  if isempty(tSeiz)
+      %update v:
+      v=(v+(dt/C)*(gE+izero(t)))/(1+(dt/C)*g);
+  elseif t>=tSeiz && t<=(tSeiz+50)
       v = randn(1)*40; % random voltage for simulating epileptic seizure
   else
-      %update v:
       v=(v+(dt/C)*(gE+izero(t)))/(1+(dt/C)*g);
   end
   
@@ -111,24 +107,24 @@ end
 
 
 
-% figure(1)
-% plot(t_plot,chv_plot)
-% title('Change in Voltage')
-% xlabel('time (ms)')
-% ylabel('Change in voltage (mV)')
+figure(1)
+plot(t_plot,chv_plot)
+title('Change in Voltage')
+xlabel('time (ms)')
+ylabel('Change in voltage (mV)')
 % 
 % 
-% 
-% figure(2)
-% subplot(2,1,1),plot(t_plot,v_plot)
-% title('Neuron Voltage')
-% xlabel('time (ms)')
-% ylabel('voltage (mV)')
-% subplot(2,1,2),plot(t_plot,mhn_plot)
-% legend('m','h','n')
-% title('Gating Variables')
-% xlabel('time (ms)')
-% ylabel('proportion')
+
+figure(2)
+subplot(2,1,1),plot(t_plot,v_plot)
+title('Neuron Voltage')
+xlabel('time (ms)')
+ylabel('voltage (mV)')
+subplot(2,1,2),plot(t_plot,mhn_plot)
+legend('m','h','n')
+title('Gating Variables')
+xlabel('time (ms)')
+ylabel('proportion')
 
 
 
