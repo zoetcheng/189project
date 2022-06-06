@@ -20,8 +20,8 @@
 % copying HH.m and adding to it
 
 %%%%  Comment out Clear All if using Seizure 30day model
-
-clear all
+% 
+% clear all
 
 %numerical solution of the space-clamped Hodgkin-Huxley equations
 global check;
@@ -107,24 +107,24 @@ end
 
 
 
-figure(1)
-plot(t_plot,chv_plot)
-title('Change in Voltage')
-xlabel('time (ms)')
-ylabel('Change in voltage (mV)')
+% figure(1)
+% plot(t_plot,chv_plot)
+% title('Change in Voltage')
+% xlabel('time (ms)')
+% ylabel('Change in voltage (mV)')
+% % 
+% % 
 % 
-% 
-
-figure(2)
-subplot(2,1,1),plot(t_plot,v_plot)
-title('Neuron Voltage')
-xlabel('time (ms)')
-ylabel('voltage (mV)')
-subplot(2,1,2),plot(t_plot,mhn_plot)
-legend('m','h','n')
-title('Gating Variables')
-xlabel('time (ms)')
-ylabel('proportion')
+% figure(2)
+% subplot(2,1,1),plot(t_plot,v_plot)
+% title('Neuron Voltage')
+% xlabel('time (ms)')
+% ylabel('voltage (mV)')
+% subplot(2,1,2),plot(t_plot,mhn_plot)
+% legend('m','h','n')
+% title('Gating Variables')
+% xlabel('time (ms)')
+% ylabel('proportion')
 
 
 
