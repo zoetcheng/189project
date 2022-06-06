@@ -1,15 +1,15 @@
-% izero current pulses
-% adds 1 pulse of current to the neuron model at the designated time
+% current pulses
+% adds pulses of current to the 
+% neuron model at the designated time
 
 function i=current_pulse(t)
 global ip;
-    if((10<t)&&(t<20))
-        i=ip;
-    elseif((30<t)&&(t<40))
-        i=ip;
-    elseif((50<t)&&(t<60))
-        i=ip;
+    if((50<t)&&(t<51))
+        i=10;
+    elseif((67<t)&&(t<68))
+        i=10;
     else
         i=0;
     end
 end
+
