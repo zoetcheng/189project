@@ -20,8 +20,8 @@
 % copying HH.m and adding to it
 
 %%%%  Comment out Clear All if using Seizure 30day model
-
-clear all
+% 
+% clear all
 
 %numerical solution of the space-clamped Hodgkin-Huxley equations
 global check;
@@ -56,12 +56,6 @@ end
 
 
 
-
-
-
-
-
-
 for klok=1:klokmax
   t=klok*dt;                      %note time
   tSeiz=klokSeiz*dt;
@@ -75,11 +69,12 @@ for klok=1:klokmax
   %save old value of v for checking purposes:
   v_old=v;
   
-  
-  if t>=tSeiz && t<=(tSeiz+50) 
+  if isempty(tSeiz) %this 
+      %update v:
+      v=(v+(dt/C)*(gE+izero(t)))/(1+(dt/C)*g);
+  elseif t>=tSeiz && t<=(tSeiz+50)
       v = randn(1)*40; % random voltage for simulating epileptic seizure
   else
-      %update v:
       v=(v+(dt/C)*(gE+izero(t)))/(1+(dt/C)*g);
   end
   
@@ -112,13 +107,13 @@ end
 
 
 
-figure(1)
-plot(t_plot,chv_plot)
-title('Change in Voltage')
-xlabel('time (ms)')
-ylabel('Change in voltage (mV)')
-% 
-% 
+% figure(1)
+% plot(t_plot,chv_plot)
+% title('Change in Voltage')
+% xlabel('time (ms)')
+% ylabel('Change in voltage (mV)')
+% % 
+% % 
 % 
 % figure(2)
 % subplot(2,1,1),plot(t_plot,v_plot)

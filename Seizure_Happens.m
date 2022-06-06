@@ -69,7 +69,7 @@ for klok=1:klokmax
   %save old value of v for checking purposes:
   v_old=v;
   
-  if isempty(tSeiz)
+  if isempty(tSeiz) %this esentially keeps it from bugging out at all. 
       %update v:
       v=(v+(dt/C)*(gE+izero(t)))/(1+(dt/C)*g);
   elseif t>=tSeiz && t<=(tSeiz+50)
