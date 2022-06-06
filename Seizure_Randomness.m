@@ -80,7 +80,7 @@ ProbSeiz2=randi([1,klokmax],1,klokmax);
 %we will say that if this is 1 there is a seizure that day but it can't
 %happen on consecutive days
 
-is2=ones(1,klokmax);
+is2= randi(klokmax,[1,klokmax]);
 Seiz2= ProbSeiz2 == is2;
 isSeiz2=zeros(1,klokmax);
 
