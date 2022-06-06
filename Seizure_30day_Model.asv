@@ -67,11 +67,11 @@ for j=1:length(isSeiz)
             subplot(3,1,2),plot(cell2mat(plot_t(j)),cell2mat(plot_chv(j)))
             title(strcat('Seizure Voltage Variance on Day:',num2str(Day(j))))
             xlabel('time (ms)')
-            ylabel('Reletive Change')
-            subplot(3,1,3),plot(cell2mat(plot_t(j)),cell2mat(plot_mhn(j)))
-            title(strcat('Gating Variables on Day:',num2str(Day(j))))
+            ylabel('voltage (mV)')
+            subplot(3,1,3),plot(cell2mat(plot_t(j)),cell2mat(plot_chv(j)))
+            title(strcat('Seizure Voltage Variance on Day:',num2str(Day(j))))
             xlabel('time (ms)')
-            ylabel('proportion')
+            ylabel('voltage (mV)')
         else
             No_Seizure
             
