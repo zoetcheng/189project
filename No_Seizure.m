@@ -1,12 +1,9 @@
-%filename HH.m
-%numerical solution of the space-clamped Hodgkin-Huxley equations
-% clear all
-clc
-clf
 global check;
 global t1p t2p ip; %parameters for the function izero(t)
 in_HH
 in_mhnv
+
+counter=0;
 for klok=1:klokmax
   t=klok*dt;                      %note time
   m=snew(m,alpham(v),betam(v),dt); %update m
@@ -18,30 +15,52 @@ for klok=1:klokmax
   gE=gNa*ENa+gK*EK+gLbar*EL;         %gE=g*E
   %save old value of v for checking purposes:
   v_old=v;
-  %update v:
-  v=(v+(dt/C)*(gE+current_pulse(t)))/(1+(dt/C)*g); %izero(t) or current_pulse(t)
+  
+  v=(v+(dt/C)*(gE+izero(t)))/(1+(dt/C)*g);
+  
   if(check)
     E=gE/g;
-    chv=C*(v-v_old)/dt+g*(v-E)-current_pulse(t); %izero(t) or current_pulse(t)
+    chv=C*(v-v_old)/dt+g*(v-E)-izero(t);
   end
+  
+  
+  
   %store results for future plotting:
   mhn_plot(:,klok)=[m h n]';
   v_plot(klok)=v;
   t_plot(klok)=t;
-  i_plot(klok)=current_pulse(t);
+  chv_plot(klok)=round(chv);
+  
+  if chv_plot(klok)>0 || chv_plot(klok)<0
+      if counter <60 % this is to simulate a system delay
+          counter=counter+1;
+      else % Apply voltage clamp
+          v=0;
+          v_plot(klok)=v;
+      end
+  else
+      continue
+  end
+  
+  
 end
 
-
-% subplot(3,1,1),plot(t_plot,v_plot)
+% 
+% figure(1)
+% plot(t_plot,chv_plot)
+% title('Change in Voltage')
+% xlabel('time (ms)')
+% ylabel('Change in voltage (mV)')
+% 
+% 
+% 
+% figure(2)
+% subplot(2,1,1),plot(t_plot,v_plot)
 % title('Neuron Voltage')
 % xlabel('time (ms)')
 % ylabel('voltage (mV)')
-% subplot(3,1,2),plot(t_plot,mhn_plot)
+% subplot(2,1,2),plot(t_plot,mhn_plot)
 % legend('m','h','n')
 % title('Gating Variables')
 % xlabel('time (ms)')
 % ylabel('proportion')
-% subplot(3,1,3),plot(t_plot,i_plot)
-% title('Applied Current')
-% xlabel('time (ms)')
-% ylabel('current (muA)')
