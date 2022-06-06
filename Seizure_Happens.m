@@ -101,6 +101,8 @@ end
 % so essentially this runs through and detects a seizure if one occurs on
 % that day and 
 
+% Idk what I was going to say here obviously ADHD brain lol
+
 
 
 
